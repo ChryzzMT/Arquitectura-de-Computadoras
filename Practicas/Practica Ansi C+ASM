@@ -1,1 +1,16 @@
+#include <stdio.h>
+int main(){
+  int a=10;
+  int b=20;
+  int resultado=0;
 
+  __asm__("movl %1, %%eax\n\t"
+  "addl %2, %%eax\n\t"
+  "movl %%eax, %0\n\t"
+  : "=r"(resultado)
+  : "r"(a), "r"(b)
+  : "%eax"
+  );
+printf("EL resultado de la suma es: %d\n", resultado);
+return 0;
+}
