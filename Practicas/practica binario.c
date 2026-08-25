@@ -31,8 +31,8 @@ int main(){
     }
   }
   Reg8Bits miDato;
-  miDato.Byte= resultado;
-  printf("%d%d%d%d%d%d%d%d"
+  miDato.byte= resultado;
+  printf("%d%d%d%d%d%d%d%d",
   miDato.bits.b7,miDato.bits.b6,
   miDato.bits.b5,miDato.bits.b4,
   miDato.bits.b3,miDato.bits.b2,
