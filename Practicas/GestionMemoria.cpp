@@ -4,7 +4,6 @@
 
 using namespace std;
 
-
 #define TAMANO 1000
 #define TAMANO2 100
 
