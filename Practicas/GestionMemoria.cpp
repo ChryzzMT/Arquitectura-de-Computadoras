@@ -40,7 +40,6 @@ int main() {
     }
 
     memcpy(segundo, &arreglo[500], TAMANO2 * sizeof(int));
-
     for (int i = 500; i <= 599; i++) {
         arreglo[i] = 0;
     }
