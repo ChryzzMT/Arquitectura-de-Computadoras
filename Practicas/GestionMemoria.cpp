@@ -12,21 +12,41 @@ int main() {
     int arreglo[TAMANO];
     int segundo[TAMANO2];
 
-    ofstream archivoSalida("datos.bin", ios::binary);
 
     for (int i = 0; i < TAMANO; i++) {
-        int valor = i + 1;
-        archivoSalida.write((char*)&valor, sizeof(int));
+        arreglo[i] = i + 1;
     }
 
+    ofstream archivoSalida("datos.bin", ios::binary);
+
+    if (!archivoSalida) {
+        cout << "Error al abrir el archivo para escritura." << endl;
+        return 1;
+    }
+    
+    archivoSalida.write(
+        reinterpret_cast<char*>(arreglo),
+        TAMANO * sizeof(int)
+    );
+
     archivoSalida.close();
+    
+    memset(arreglo, 0, TAMANO * sizeof(int));
 
     ifstream archivoEntrada("datos.bin", ios::binary);
 
-    archivoEntrada.read((char*)arreglo, TAMANO * sizeof(int));
+    if (!archivoEntrada) {
+        cout << "Error al abrir el archivo para lectura." << endl;
+        return 1;
+    }
+
+    archivoEntrada.read(
+        reinterpret_cast<char*>(arreglo),
+        TAMANO * sizeof(int)
+    );
 
     archivoEntrada.close();
-
+    
     cout << "Primeros 5 elementos antes del traslado:" << endl;
 
     for (int i = 0; i < 5; i++) {
@@ -39,10 +59,17 @@ int main() {
         cout << "arreglo[" << i << "] = " << arreglo[i] << endl;
     }
 
-    memcpy(segundo, &arreglo[500], TAMANO2 * sizeof(int));
-    for (int i = 500; i <= 599; i++) {
-        arreglo[i] = 0;
-    }
+    memcpy(
+        segundo,
+        &arreglo[500],
+        TAMANO2 * sizeof(int)
+    );
+
+    memset(
+        &arreglo[500],
+        0,
+        TAMANO2 * sizeof(int)
+    );
 
     cout << "\nElementos transferidos al segundo arreglo:" << endl;
 
@@ -51,8 +78,7 @@ int main() {
     }
 
     bool correcto = true;
-
-    for (int i = 500; i <= 599; i++) {
+    for (int i = 500; i < 600; i++) {
         if (arreglo[i] != 0) {
             correcto = false;
             break;
@@ -62,10 +88,16 @@ int main() {
     cout << "\nValidacion:" << endl;
 
     if (correcto) {
-        cout << "Correcto: los indices 500 al 599 del arreglo original contienen ceros." << endl;
+        cout << "Correcto: los indices 500 al 599 "
+             << "del arreglo original contienen ceros." << endl;
     } else {
-        cout << "Error: algunos elementos no fueron establecidos en cero." << endl;
+        cout << "Error: algunos elementos no fueron "
+             << "establecidos en cero." << endl;
     }
+
+    return 0;
+}
+
 
     return 0;
 }
