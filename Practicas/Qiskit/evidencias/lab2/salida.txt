@@ -1,0 +1,21 @@
+CIRCUITO (ejemplo θ = π/2):
+     ┌─────────┐┌─┐
+  q: ┤ Ry(π/2) ├┤M├
+     └─────────┘└╥┘
+c: 1/════════════╩═
+                 0 
+
+TABLA Ry(θ), 10000 disparos por ángulo
+Ángulo                                P(0) med  P(0) teo  P(1) med  P(1) teo
+Polo Norte (theta = 0)                 100.00%   100.00%     0.00%     0.00%
+  conteos: |0⟩=10000  |1⟩=0
+Ángulo 45° (theta = pi/4)               85.08%    85.36%    14.92%    14.64%
+  conteos: |0⟩=8508  |1⟩=1492
+Ecuador (theta = pi/2, Estado |+>)      50.40%    50.00%    49.60%    50.00%
+  conteos: |0⟩=5040  |1⟩=4960
+Polo Sur (theta = pi, Estado |1>)        0.00%     0.00%   100.00%   100.00%
+  conteos: |0⟩=0  |1⟩=10000
+
+Justificación: Ry(θ)|0⟩ = cos(θ/2)|0⟩ + sin(θ/2)|1⟩. Al medir en Z,
+P(|0⟩) = cos²(θ/2) y P(|1⟩) = sin²(θ/2). En θ = π/4, cos²(π/8) ≈ 85.36 %.
+La diferencia con la columna teórica es el ruido de 10 000 disparos.
