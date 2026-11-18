@@ -1,0 +1,18 @@
+CIRCUITO CUÁNTICO:
+     ┌───┐          ┌─┐   
+q_0: ┤ H ├──■───────┤M├───
+     └───┘┌─┴─┐┌───┐└╥┘┌─┐
+q_1: ─────┤ X ├┤ X ├─╫─┤M├
+          └───┘└───┘ ║ └╥┘
+c: 2/════════════════╩══╩═
+                     0  1 
+
+RESULTADOS DE LA MEDICIÓN (10000 disparos):
+Estado |00⟩: 0 ocurrencias (0.00%)
+Estado |01⟩: 5025 ocurrencias (50.25%)
+Estado |10⟩: 4975 ocurrencias (49.75%)
+Estado |11⟩: 0 ocurrencias (0.00%)
+
+Compuerta intercalada: Pauli-X sobre el cúbit 1, después de la CNOT.
+
+Figuras guardadas en: /workspace/Practicas/Qiskit/evidencias/reto1

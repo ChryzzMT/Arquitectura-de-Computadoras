@@ -1,0 +1,16 @@
+CIRCUITO CUÁNTICO:
+     ┌───┐     ┌─┐   
+q_0: ┤ H ├──■──┤M├───
+     └───┘┌─┴─┐└╥┘┌─┐
+q_1: ─────┤ X ├─╫─┤M├
+          └───┘ ║ └╥┘
+c: 2/═══════════╩══╩═
+                0  1 
+
+RESULTADOS DE LA MEDICIÓN (10000 disparos):
+Estado |00⟩: 5035 ocurrencias (50.35%)
+Estado |01⟩: 0 ocurrencias (0.00%)
+Estado |10⟩: 0 ocurrencias (0.00%)
+Estado |11⟩: 4965 ocurrencias (49.65%)
+
+Figuras guardadas en: /workspace/Practicas/Qiskit/evidencias/lab1

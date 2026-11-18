@@ -1,0 +1,14 @@
+CIRCUITO (ejemplo θ = π/2):
+     ┌─────────┐┌─┐
+  q: ┤ Ry(π/2) ├┤M├
+     └─────────┘└╥┘
+c: 1/════════════╩═
+                 0 
+
+Polo Norte (theta = 0)              -> P(|0⟩): 100.0% | P(|1⟩):   0.0%
+Ángulo 45° (theta = pi/4)           -> P(|0⟩):  85.3% | P(|1⟩):  14.7%
+Ecuador (theta = pi/2, Estado |+>)  -> P(|0⟩):  49.5% | P(|1⟩):  50.5%
+Polo Sur (theta = pi, Estado |1>)   -> P(|0⟩):   0.0% | P(|1⟩): 100.0%
+
+Desviación máxima |P(|0⟩) - cos²(θ/2)| = 0.94 puntos porcentuales
+Figuras guardadas en: /workspace/Practicas/Qiskit/evidencias/lab2

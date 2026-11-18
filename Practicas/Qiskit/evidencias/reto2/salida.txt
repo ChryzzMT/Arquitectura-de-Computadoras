@@ -1,0 +1,16 @@
+Deutsch SIN la compuerta X en la ancilla q1:
+La ancilla queda en |+⟩. Ese estado no genera la fase (-1)^f(x).
+
+Oráculo: constante_0            | Medición q0: '0' -> el algoritmo diría CONSTANTE
+  conteos: {'0': 1000}
+Oráculo: constante_1            | Medición q0: '0' -> el algoritmo diría CONSTANTE
+  conteos: {'0': 1000}
+Oráculo: balanceada_identidad   | Medición q0: '0' -> el algoritmo diría CONSTANTE
+  conteos: {'0': 1000}
+Oráculo: balanceada_inversa     | Medición q0: '0' -> el algoritmo diría CONSTANTE
+  conteos: {'0': 1000}
+
+Los cuatro oráculos, constantes y balanceados, colapsan en 0.
+Sin |−⟩ no hay phase kickback y una sola consulta ya no distingue la función.
+
+Figuras guardadas en: /workspace/Practicas/Qiskit/evidencias/reto2

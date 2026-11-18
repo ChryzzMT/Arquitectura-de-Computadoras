@@ -1,0 +1,10 @@
+Oráculo: constante_0            | Medición q0: '0' -> Función CONSTANTE
+  conteos: {'0': 1000}
+Oráculo: constante_1            | Medición q0: '0' -> Función CONSTANTE
+  conteos: {'0': 1000}
+Oráculo: balanceada_identidad   | Medición q0: '1' -> Función BALANCEADA
+  conteos: {'1': 1000}
+Oráculo: balanceada_inversa     | Medición q0: '1' -> Función BALANCEADA
+  conteos: {'1': 1000}
+
+Figuras guardadas en: /workspace/Practicas/Qiskit/evidencias/lab3
