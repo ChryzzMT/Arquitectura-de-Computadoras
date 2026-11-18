@@ -1,10 +1,4 @@
-from pathlib import Path
-
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 from qiskit import QuantumCircuit
-from qiskit.visualization import plot_histogram
 from qiskit_aer import AerSimulator
 
 
@@ -37,43 +31,24 @@ def ejecutar_deutsch_sin_x(tipo: str):
     return qc, counts
 
 
-print("Deutsch SIN la compuerta X en la ancilla q1:")
-print("La ancilla queda en |+⟩. Ese estado no genera la fase (-1)^f(x).")
+print("Deutsch SIN la compuerta X en la ancilla q1.")
+print("ESPERADO: los cuatro oráculos miden q0 = '0', también los balanceados.")
 print()
 
-casos = ["constante_0", "constante_1", "balanceada_identidad", "balanceada_inversa"]
-resultados = []
-for caso in casos:
+shots = 1000
+for caso in ["constante_0", "constante_1", "balanceada_identidad", "balanceada_inversa"]:
     circ, res = ejecutar_deutsch_sin_x(caso)
     bit = max(res, key=res.get)
     conclusion = "CONSTANTE" if bit == "0" else "BALANCEADA"
-    print(f"Oráculo: {caso:22s} | Medición q0: '{bit}' -> el algoritmo diría {conclusion}")
-    print(f"  conteos: {dict(sorted(res.items()))}")
-    resultados.append((caso, circ, res, bit))
+    print(f"CIRCUITO ({caso})")
+    print(circ.draw(output="text"))
+    print(f"Medición q0: '{bit}' -> el algoritmo diría {conclusion}")
+    for estado in ("0", "1"):
+        n = res.get(estado, 0)
+        print(f"  |{estado}⟩: {n} ocurrencias ({n / shots * 100:.2f}%)")
+    print()
 
-print()
-print("Los cuatro oráculos, constantes y balanceados, colapsan en 0.")
-print("Sin |−⟩ no hay phase kickback y una sola consulta ya no distingue la función.")
-
-salida = Path(__file__).resolve().parent / "evidencias" / "reto2"
-salida.mkdir(parents=True, exist_ok=True)
-
-fig, axes = plt.subplots(2, 2, figsize=(12.5, 8.2))
-for ax, (caso, circ, _res, bit) in zip(axes.ravel(), resultados):
-    circ.draw(output="mpl", ax=ax, fold=-1)
-    ax.set_title(f"{caso}   →   q0 = '{bit}'")
-fig.tight_layout()
-fig.savefig(salida / "circuito.png", dpi=140, bbox_inches="tight", facecolor="white")
-plt.close(fig)
-
-fig_hist = plot_histogram(
-    [res for _caso, _circ, res, _bit in resultados],
-    legend=casos,
-    title="Deutsch sin X en la ancilla: medición de q0 (1 000 disparos)",
-    figsize=(8.5, 4.6),
-    bar_labels=False,
-)
-fig_hist.savefig(salida / "histograma.png", dpi=150, bbox_inches="tight", facecolor="white")
-plt.close(fig_hist)
-
-print(f"\nFiguras guardadas en: {salida}")
+print("Justificación: sin la X, el Hadamard deja la ancilla en |+⟩ y no en |−⟩.")
+print("|+⟩ no adquiere la fase (−1)^f(x), así que no hay phase kickback. q0")
+print("sigue en |+⟩ para cualquier oráculo y el Hadamard final lo manda a |0⟩.")
+print("Constantes y balanceadas quedan indistinguibles.")

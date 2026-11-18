@@ -35,7 +35,7 @@ python3 reto1_bell_psi_plus.py
 python3 reto2_deutsch_sin_x.py
 ```
 
-Cada script imprime el resultado en la terminal y guarda el diagrama del circuito y la gráfica en `evidencias/`. No abre ventanas: las figuras se escriben con `savefig` usando el backend Agg.
+Cada script imprime en la consola el circuito en texto, los conteos, el valor teórico y una justificación breve. No genera gráficas.
 
 | Script | Qué comprueba |
 | --- | --- |

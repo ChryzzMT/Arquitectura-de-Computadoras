@@ -1,10 +1,4 @@
-from pathlib import Path
-
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 from qiskit import QuantumCircuit
-from qiskit.visualization import plot_histogram
 from qiskit_aer import AerSimulator
 
 
@@ -37,36 +31,29 @@ def ejecutar_deutsch(tipo: str):
     return qc, counts
 
 
+esperado = {
+    "constante_0": ("0", "CONSTANTE"),
+    "constante_1": ("0", "CONSTANTE"),
+    "balanceada_identidad": ("1", "BALANCEADA"),
+    "balanceada_inversa": ("1", "BALANCEADA"),
+}
+
 # Probar los 4 casos posibles de funciones booleanas:
-casos = ["constante_0", "constante_1", "balanceada_identidad", "balanceada_inversa"]
-resultados = []
-for caso in casos:
+shots = 1000
+for caso in ["constante_0", "constante_1", "balanceada_identidad", "balanceada_inversa"]:
     circ, res = ejecutar_deutsch(caso)
     bit = max(res, key=res.get)
+    bit_esp, conclusion_esp = esperado[caso]
     conclusion = "CONSTANTE" if bit == "0" else "BALANCEADA"
-    print(f"Oráculo: {caso:22s} | Medición q0: '{bit}' -> Función {conclusion}")
-    print(f"  conteos: {dict(sorted(res.items()))}")
-    resultados.append((caso, circ, res, bit))
+    print(f"CIRCUITO ({caso}), esperado q0 = '{bit_esp}' -> {conclusion_esp}")
+    print(circ.draw(output="text"))
+    print(f"Medición q0: '{bit}' -> Función {conclusion}")
+    for estado in ("0", "1"):
+        n = res.get(estado, 0)
+        print(f"  |{estado}⟩: {n} ocurrencias ({n / shots * 100:.2f}%)")
+    print()
 
-salida = Path(__file__).resolve().parent / "evidencias" / "lab3"
-salida.mkdir(parents=True, exist_ok=True)
-
-fig, axes = plt.subplots(2, 2, figsize=(12.5, 8.2))
-for ax, (caso, circ, _res, bit) in zip(axes.ravel(), resultados):
-    circ.draw(output="mpl", ax=ax, fold=-1)
-    ax.set_title(f"{caso}   →   q0 = '{bit}'")
-fig.tight_layout()
-fig.savefig(salida / "circuito.png", dpi=140, bbox_inches="tight", facecolor="white")
-plt.close(fig)
-
-fig_hist = plot_histogram(
-    [res for _caso, _circ, res, _bit in resultados],
-    legend=casos,
-    title="Algoritmo de Deutsch: medición de q0 (1 000 disparos)",
-    figsize=(8.5, 4.6),
-    bar_labels=False,
-)
-fig_hist.savefig(salida / "histograma.png", dpi=150, bbox_inches="tight", facecolor="white")
-plt.close(fig_hist)
-
-print(f"\nFiguras guardadas en: {salida}")
+print("Justificación: la X y el Hadamard dejan la ancilla en |−⟩. El oráculo")
+print("multiplica la rama |x⟩ por (−1)^f(x): es el phase kickback. Si f es")
+print("constante esa fase es global y el segundo Hadamard devuelve 0. Si f es")
+print("balanceada la fase es relativa y devuelve 1. Hace falta una sola consulta.")

@@ -1,10 +1,52 @@
-Oráculo: constante_0            | Medición q0: '0' -> Función CONSTANTE
-  conteos: {'0': 1000}
-Oráculo: constante_1            | Medición q0: '0' -> Función CONSTANTE
-  conteos: {'0': 1000}
-Oráculo: balanceada_identidad   | Medición q0: '1' -> Función BALANCEADA
-  conteos: {'1': 1000}
-Oráculo: balanceada_inversa     | Medición q0: '1' -> Función BALANCEADA
-  conteos: {'1': 1000}
+CIRCUITO (constante_0), esperado q0 = '0' -> CONSTANTE
+     ┌───┐┌───┐┌─┐
+q_0: ┤ H ├┤ H ├┤M├
+     ├───┤├───┤└╥┘
+q_1: ┤ X ├┤ H ├─╫─
+     └───┘└───┘ ║ 
+c: 1/═══════════╩═
+                0 
+Medición q0: '0' -> Función CONSTANTE
+  |0⟩: 1000 ocurrencias (100.00%)
+  |1⟩: 0 ocurrencias (0.00%)
 
-Figuras guardadas en: /workspace/Practicas/Qiskit/evidencias/lab3
+CIRCUITO (constante_1), esperado q0 = '0' -> CONSTANTE
+     ┌───┐┌───┐     ┌─┐
+q_0: ┤ H ├┤ H ├─────┤M├
+     ├───┤├───┤┌───┐└╥┘
+q_1: ┤ X ├┤ H ├┤ X ├─╫─
+     └───┘└───┘└───┘ ║ 
+c: 1/════════════════╩═
+                     0 
+Medición q0: '0' -> Función CONSTANTE
+  |0⟩: 1000 ocurrencias (100.00%)
+  |1⟩: 0 ocurrencias (0.00%)
+
+CIRCUITO (balanceada_identidad), esperado q0 = '1' -> BALANCEADA
+     ┌───┐          ┌───┐┌─┐
+q_0: ┤ H ├───────■──┤ H ├┤M├
+     ├───┤┌───┐┌─┴─┐└───┘└╥┘
+q_1: ┤ X ├┤ H ├┤ X ├──────╫─
+     └───┘└───┘└───┘      ║ 
+c: 1/═════════════════════╩═
+                          0 
+Medición q0: '1' -> Función BALANCEADA
+  |0⟩: 0 ocurrencias (0.00%)
+  |1⟩: 1000 ocurrencias (100.00%)
+
+CIRCUITO (balanceada_inversa), esperado q0 = '1' -> BALANCEADA
+     ┌───┐┌───┐     ┌───┐┌───┐┌─┐
+q_0: ┤ H ├┤ X ├──■──┤ X ├┤ H ├┤M├
+     ├───┤├───┤┌─┴─┐└───┘└───┘└╥┘
+q_1: ┤ X ├┤ H ├┤ X ├───────────╫─
+     └───┘└───┘└───┘           ║ 
+c: 1/══════════════════════════╩═
+                               0 
+Medición q0: '1' -> Función BALANCEADA
+  |0⟩: 0 ocurrencias (0.00%)
+  |1⟩: 1000 ocurrencias (100.00%)
+
+Justificación: la X y el Hadamard dejan la ancilla en |−⟩. El oráculo
+multiplica la rama |x⟩ por (−1)^f(x): es el phase kickback. Si f es
+constante esa fase es global y el segundo Hadamard devuelve 0. Si f es
+balanceada la fase es relativa y devuelve 1. Hace falta una sola consulta.

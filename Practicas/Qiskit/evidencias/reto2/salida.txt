@@ -1,16 +1,55 @@
-Deutsch SIN la compuerta X en la ancilla q1:
-La ancilla queda en |+⟩. Ese estado no genera la fase (-1)^f(x).
+Deutsch SIN la compuerta X en la ancilla q1.
+ESPERADO: los cuatro oráculos miden q0 = '0', también los balanceados.
 
-Oráculo: constante_0            | Medición q0: '0' -> el algoritmo diría CONSTANTE
-  conteos: {'0': 1000}
-Oráculo: constante_1            | Medición q0: '0' -> el algoritmo diría CONSTANTE
-  conteos: {'0': 1000}
-Oráculo: balanceada_identidad   | Medición q0: '0' -> el algoritmo diría CONSTANTE
-  conteos: {'0': 1000}
-Oráculo: balanceada_inversa     | Medición q0: '0' -> el algoritmo diría CONSTANTE
-  conteos: {'0': 1000}
+CIRCUITO (constante_0)
+     ┌───┐┌───┐┌─┐
+q_0: ┤ H ├┤ H ├┤M├
+     ├───┤└───┘└╥┘
+q_1: ┤ H ├──────╫─
+     └───┘      ║ 
+c: 1/═══════════╩═
+                0 
+Medición q0: '0' -> el algoritmo diría CONSTANTE
+  |0⟩: 1000 ocurrencias (100.00%)
+  |1⟩: 0 ocurrencias (0.00%)
 
-Los cuatro oráculos, constantes y balanceados, colapsan en 0.
-Sin |−⟩ no hay phase kickback y una sola consulta ya no distingue la función.
+CIRCUITO (constante_1)
+     ┌───┐┌───┐┌─┐
+q_0: ┤ H ├┤ H ├┤M├
+     ├───┤├───┤└╥┘
+q_1: ┤ H ├┤ X ├─╫─
+     └───┘└───┘ ║ 
+c: 1/═══════════╩═
+                0 
+Medición q0: '0' -> el algoritmo diría CONSTANTE
+  |0⟩: 1000 ocurrencias (100.00%)
+  |1⟩: 0 ocurrencias (0.00%)
 
-Figuras guardadas en: /workspace/Practicas/Qiskit/evidencias/reto2
+CIRCUITO (balanceada_identidad)
+     ┌───┐     ┌───┐┌─┐
+q_0: ┤ H ├──■──┤ H ├┤M├
+     ├───┤┌─┴─┐└───┘└╥┘
+q_1: ┤ H ├┤ X ├──────╫─
+     └───┘└───┘      ║ 
+c: 1/════════════════╩═
+                     0 
+Medición q0: '0' -> el algoritmo diría CONSTANTE
+  |0⟩: 1000 ocurrencias (100.00%)
+  |1⟩: 0 ocurrencias (0.00%)
+
+CIRCUITO (balanceada_inversa)
+     ┌───┐┌───┐     ┌───┐┌───┐┌─┐
+q_0: ┤ H ├┤ X ├──■──┤ X ├┤ H ├┤M├
+     ├───┤└───┘┌─┴─┐└───┘└───┘└╥┘
+q_1: ┤ H ├─────┤ X ├───────────╫─
+     └───┘     └───┘           ║ 
+c: 1/══════════════════════════╩═
+                               0 
+Medición q0: '0' -> el algoritmo diría CONSTANTE
+  |0⟩: 1000 ocurrencias (100.00%)
+  |1⟩: 0 ocurrencias (0.00%)
+
+Justificación: sin la X, el Hadamard deja la ancilla en |+⟩ y no en |−⟩.
+|+⟩ no adquiere la fase (−1)^f(x), así que no hay phase kickback. q0
+sigue en |+⟩ para cualquier oráculo y el Hadamard final lo manda a |0⟩.
+Constantes y balanceadas quedan indistinguibles.

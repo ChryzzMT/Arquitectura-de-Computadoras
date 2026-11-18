@@ -7,12 +7,13 @@ q_1: ─────┤ X ├┤ X ├─╫─┤M├
 c: 2/════════════════╩══╩═
                      0  1 
 
+ESPERADO: |01⟩ y |10⟩ cerca del 50 %; |00⟩ y |11⟩ en 0 %.
 RESULTADOS DE LA MEDICIÓN (10000 disparos):
 Estado |00⟩: 0 ocurrencias (0.00%)
-Estado |01⟩: 5025 ocurrencias (50.25%)
-Estado |10⟩: 4975 ocurrencias (49.75%)
+Estado |01⟩: 4957 ocurrencias (49.57%)
+Estado |10⟩: 5043 ocurrencias (50.43%)
 Estado |11⟩: 0 ocurrencias (0.00%)
 
-Compuerta intercalada: Pauli-X sobre el cúbit 1, después de la CNOT.
-
-Figuras guardadas en: /workspace/Practicas/Qiskit/evidencias/reto1
+Justificación: la Pauli-X en el cúbit 1, después de la CNOT, cambia
+|0⟩ por |1⟩ en q1. (|00⟩+|11⟩)/√2 pasa a (|10⟩+|01⟩)/√2, el estado |Ψ+⟩.
+Por eso solo aparecen 01 y 10, cada uno con probabilidad 1/2.

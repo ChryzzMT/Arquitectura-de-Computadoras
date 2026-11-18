@@ -1,11 +1,6 @@
 import math
-from pathlib import Path
 
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 from qiskit import QuantumCircuit
-from qiskit.visualization import plot_histogram
 from qiskit_aer import AerSimulator
 
 # Circuito con 3 cúbits y 3 bits clásicos:
@@ -46,9 +41,10 @@ print(qc.draw(output="text"))
 shots = 10000
 counts = AerSimulator().run(qc, shots=shots).result().get_counts()
 
-print(f"\nCONTEOS COMPLETOS ({shots} disparos, orden c2 c1 c0):")
+print(f"\nESPERADO en Bob: P(|0⟩) = 75.00 %, P(|1⟩) = 25.00 %.")
+print(f"CONTEOS COMPLETOS ({shots} disparos, orden c2 c1 c0):")
 for bitstring, n in sorted(counts.items()):
-    print(f"  {bitstring}: {n}")
+    print(f"  {bitstring}: {n} ({n / shots * 100:.2f}%)")
 
 # Contabilizar el resultado medido en el bit más significativo (cúbit de Bob q2):
 bob = {"0": 0, "1": 0}
@@ -56,24 +52,10 @@ for bitstring, n in counts.items():
     bob[bitstring[0]] += n
 
 print("\nVERIFICACIÓN EN EL CÚBIT DE BOB (q2):")
-print(f"P(|0⟩): {bob['0'] / 100:.2f}% (Teórico: 75.00%)")
-print(f"P(|1⟩): {bob['1'] / 100:.2f}% (Teórico: 25.00%)")
+print(f"P(|0⟩): {bob['0'] / shots * 100:.2f}% (Teórico: 75.00%)")
+print(f"P(|1⟩): {bob['1'] / shots * 100:.2f}% (Teórico: 25.00%)")
 
-salida = Path(__file__).resolve().parent / "evidencias" / "lab4"
-salida.mkdir(parents=True, exist_ok=True)
-
-fig_circ = qc.draw(output="mpl", fold=-1)
-if not hasattr(fig_circ, "savefig"):
-    fig_circ = plt.gcf()
-fig_circ.savefig(salida / "circuito.png", dpi=150, bbox_inches="tight", facecolor="white")
-plt.close(fig_circ)
-
-fig_hist = plot_histogram(
-    {"0": bob["0"], "1": bob["1"]},
-    title="Cúbit de Bob tras teletransportar Ry(π/3)",
-    figsize=(6.2, 4.2),
-)
-fig_hist.savefig(salida / "histograma.png", dpi=150, bbox_inches="tight", facecolor="white")
-plt.close(fig_hist)
-
-print(f"\nFiguras guardadas en: {salida}")
+print()
+print("Justificación: Alice mide q0 y q1 en la base de Bell. La CNOT y la CZ")
+print("aplican en Bob la corrección X o Z según esos bits. Ry(π/3)|0⟩ tiene")
+print("amplitudes cos(π/6)=√3/2 y sin(π/6)=1/2, de modo que P(0)=75 % y P(1)=25 %.")

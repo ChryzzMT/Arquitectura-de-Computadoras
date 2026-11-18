@@ -1,4 +1,2 @@
 qiskit>=1.2,<2
 qiskit-aer
-matplotlib
-pylatexenc

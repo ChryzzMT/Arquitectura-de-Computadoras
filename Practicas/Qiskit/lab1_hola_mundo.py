@@ -1,10 +1,4 @@
-from pathlib import Path
-
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 from qiskit import QuantumCircuit
-from qiskit.visualization import plot_histogram
 from qiskit_aer import AerSimulator
 
 # 1. Definición del circuito: 2 cúbits cuánticos y 2 bits clásicos
@@ -30,24 +24,14 @@ job = backend.run(qc, shots=shots)
 counts = job.result().get_counts(qc)
 
 # 7. Presentación de los resultados estadísticos
-print(f"\nRESULTADOS DE LA MEDICIÓN ({shots} disparos):")
+print(f"\nESPERADO: |00⟩ y |11⟩ cerca del 50 %; |01⟩ y |10⟩ en 0 %.")
+print(f"RESULTADOS DE LA MEDICIÓN ({shots} disparos):")
 for estado in ("00", "01", "10", "11"):
     count = counts.get(estado, 0)
     porcentaje = (count / shots) * 100
     print(f"Estado |{estado}⟩: {count} ocurrencias ({porcentaje:.2f}%)")
 
-# 8. Guardado del diagrama y del histograma (sin abrir ventana)
-salida = Path(__file__).resolve().parent / "evidencias" / "lab1"
-salida.mkdir(parents=True, exist_ok=True)
-
-fig_circ = qc.draw(output="mpl", fold=-1)
-if not hasattr(fig_circ, "savefig"):
-    fig_circ = plt.gcf()
-fig_circ.savefig(salida / "circuito.png", dpi=150, bbox_inches="tight", facecolor="white")
-plt.close(fig_circ)
-
-fig_hist = plot_histogram(counts, title="Estado de Bell |Φ⁺⟩  (10 000 disparos)", figsize=(6.5, 4))
-fig_hist.savefig(salida / "histograma.png", dpi=150, bbox_inches="tight", facecolor="white")
-plt.close(fig_hist)
-
-print(f"\nFiguras guardadas en: {salida}")
+print()
+print("Justificación: el Hadamard deja a q0 en superposición (|0⟩+|1⟩)/√2 y la")
+print("CNOT copia ese valor en q1. El estado es (|00⟩+|11⟩)/√2. Las ramas 01 y")
+print("10 tienen amplitud cero; 00 y 11 salen cada una con probabilidad 1/2.")
