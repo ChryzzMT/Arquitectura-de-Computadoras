@@ -1,0 +1,55 @@
+Deutsch SIN la compuerta X en la ancilla q1.
+ESPERADO: los cuatro oráculos miden q0 = '0', también los balanceados.
+
+CIRCUITO (constante_0)
+     ┌───┐┌───┐┌─┐
+q_0: ┤ H ├┤ H ├┤M├
+     ├───┤└───┘└╥┘
+q_1: ┤ H ├──────╫─
+     └───┘      ║ 
+c: 1/═══════════╩═
+                0 
+Medición q0: '0' -> el algoritmo diría CONSTANTE
+  |0⟩: 1000 ocurrencias (100.00%)
+  |1⟩: 0 ocurrencias (0.00%)
+
+CIRCUITO (constante_1)
+     ┌───┐┌───┐┌─┐
+q_0: ┤ H ├┤ H ├┤M├
+     ├───┤├───┤└╥┘
+q_1: ┤ H ├┤ X ├─╫─
+     └───┘└───┘ ║ 
+c: 1/═══════════╩═
+                0 
+Medición q0: '0' -> el algoritmo diría CONSTANTE
+  |0⟩: 1000 ocurrencias (100.00%)
+  |1⟩: 0 ocurrencias (0.00%)
+
+CIRCUITO (balanceada_identidad)
+     ┌───┐     ┌───┐┌─┐
+q_0: ┤ H ├──■──┤ H ├┤M├
+     ├───┤┌─┴─┐└───┘└╥┘
+q_1: ┤ H ├┤ X ├──────╫─
+     └───┘└───┘      ║ 
+c: 1/════════════════╩═
+                     0 
+Medición q0: '0' -> el algoritmo diría CONSTANTE
+  |0⟩: 1000 ocurrencias (100.00%)
+  |1⟩: 0 ocurrencias (0.00%)
+
+CIRCUITO (balanceada_inversa)
+     ┌───┐┌───┐     ┌───┐┌───┐┌─┐
+q_0: ┤ H ├┤ X ├──■──┤ X ├┤ H ├┤M├
+     ├───┤└───┘┌─┴─┐└───┘└───┘└╥┘
+q_1: ┤ H ├─────┤ X ├───────────╫─
+     └───┘     └───┘           ║ 
+c: 1/══════════════════════════╩═
+                               0 
+Medición q0: '0' -> el algoritmo diría CONSTANTE
+  |0⟩: 1000 ocurrencias (100.00%)
+  |1⟩: 0 ocurrencias (0.00%)
+
+Justificación: sin la X, el Hadamard deja la ancilla en |+⟩ y no en |−⟩.
+|+⟩ no adquiere la fase (−1)^f(x), así que no hay phase kickback. q0
+sigue en |+⟩ para cualquier oráculo y el Hadamard final lo manda a |0⟩.
+Constantes y balanceadas quedan indistinguibles.

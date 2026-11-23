@@ -1,0 +1,19 @@
+CIRCUITO CUÁNTICO:
+     ┌───┐     ┌─┐   
+q_0: ┤ H ├──■──┤M├───
+     └───┘┌─┴─┐└╥┘┌─┐
+q_1: ─────┤ X ├─╫─┤M├
+          └───┘ ║ └╥┘
+c: 2/═══════════╩══╩═
+                0  1 
+
+ESPERADO: |00⟩ y |11⟩ cerca del 50 %; |01⟩ y |10⟩ en 0 %.
+RESULTADOS DE LA MEDICIÓN (10000 disparos):
+Estado |00⟩: 4971 ocurrencias (49.71%)
+Estado |01⟩: 0 ocurrencias (0.00%)
+Estado |10⟩: 0 ocurrencias (0.00%)
+Estado |11⟩: 5029 ocurrencias (50.29%)
+
+Justificación: el Hadamard deja a q0 en superposición (|0⟩+|1⟩)/√2 y la
+CNOT copia ese valor en q1. El estado es (|00⟩+|11⟩)/√2. Las ramas 01 y
+10 tienen amplitud cero; 00 y 11 salen cada una con probabilidad 1/2.
